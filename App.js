@@ -1,37 +1,31 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, FlatList} from 'react-native';
 
 
 export default function App() {
 
-  const [name, setName] = useState('Yamaha');
-  const [speed, setSpeed] = useState('450');
-
-  const clickHandler = () => {
-    setName('Bugatti');
-    setSpeed('560');
-  }
+  const [ bikes, setBikes] = useState([
+    { name : 'Kawasaki', id: '1', speed: '400'},
+    { name : 'Honda', id: '2', speed: '350'},
+    { name: 'Hyndai', id: '3', speed: '300'},
+    { name: 'Bugati', id: '4', speed: '250'},
+    { name: 'BMW', id: '5', speed: '200'},
+    { name: 'Yamaha', id: '6', speed: '150'},
+    { name: 'Ducati', id: '7', speed: '100'}
+  ]);
 
   return (
     <View style={styles.container}>
-      <Text>Enter The Name Of The Bike:</Text>
-      <TextInput 
-      style = {styles.input}
-      placeholder = 'e.g Honda'
-      onChangeText={(val)=>setName(val)}/>
 
-      <Text>Enter Price:</Text>
-      <TextInput style = {styles.input}
-      keyboardType='numeric'
-      placeholder='e.g 40000'
-      onChangeText={(val)=>setSpeed(val)}
+      <FlatList
+      keyExtractor={(item) => item.id}
+      data={bikes}
+      renderItem={({ item })=>(
+      <Text style={styles.item}>{item.name}, Speed : {item.speed}</Text>
+          
+      )}
+
       />
-      <Text>{ name }</Text>
-      <Text>This bike's speed is {speed} KM/H</Text>
-
-      <View style = {styles.buttonContainer}>
-        <Button title = 'Default Values' onPress={clickHandler}/>
-      </View>
 
     </View>
   );
@@ -41,17 +35,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 40,
+    paddingHorizontal: 20
+    //alignItems: 'center',
+    //justifyContent: 'center',
   },
-  buttonContainer: {
-    marginTop: 20
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#777',
-    padding: 8,
-    margin: 10,
-    width: 200
+  item: {
+    marginTop: 24,
+    padding: 30,
+    backgroundColor: 'pink',
+    fontSize:24
   }
 });
