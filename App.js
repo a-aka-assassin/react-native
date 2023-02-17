@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View, FlatList} from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 
 
 export default function App() {
@@ -14,6 +14,12 @@ export default function App() {
     { name: 'Ducati', id: '7', speed: '100'}
   ]);
 
+  const pressHandler = (id) => {
+    setBikes((prevBikes)=>{
+        return prevBikes.filter(bike=>bike.id != id);
+    });
+  }
+
   return (
     <View style={styles.container}>
 
@@ -21,7 +27,9 @@ export default function App() {
       keyExtractor={(item) => item.id}
       data={bikes}
       renderItem={({ item })=>(
-      <Text style={styles.item}>{item.name}, Speed : {item.speed}</Text>
+        <TouchableOpacity onPress={() => pressHandler(item.id)}>
+           <Text style={styles.item}>{item.name}, Speed : {item.speed}</Text>
+        </TouchableOpacity>
           
       )}
 
